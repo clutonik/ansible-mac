@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - elliotweiser.osx-command-line-tools
