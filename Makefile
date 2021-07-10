@@ -3,6 +3,8 @@ venv:
 	. venv/bin/activate
 	pip3 install -r requirements.txt
 
-mac:
+install-dependencies:
 	ansible-galaxy install -r requirements.yml
+
+mac:
 	ansible-playbook mac.yml -i inventory.yml

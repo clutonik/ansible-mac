@@ -1,0 +1,25 @@
+---
+- name: Check if oh-my-zsh is already installed
+  ansible.builtin.stat:
+    path: "{{ user_home }}/.oh-my-zsh"
+  register: zsh_dir
+
+- name: Install oh-my-zsh if it is not installed
+  block:
+  - name: Create a directory to save oh-my-zsh install.sh
+    ansible.builtin.file:
+      path: "{{ oh_my_zsh_dir }}"
+      state: directory
+      mode: '0755'
+
+  - name: Download oh-my-zsh installation script
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+      dest: "{{ oh_my_zsh_dir }}"
+      mode: '0755'
+
+  - name: Install oh-my-zsh using install.sh 
+    ansible.builtin.shell: ./install.sh
+    args:
+      chdir: "{{ oh_my_zsh_dir }}"
+  when: not zsh_dir.stat.isdir
