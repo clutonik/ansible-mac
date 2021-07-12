@@ -2,4 +2,5 @@
 - hosts: all
   roles:
     - elliotweiser.osx-command-line-tools
-    - oh-my-zsh 
+    - oh-my-zsh
+    - geerlingguy.homebrew
