@@ -7,4 +7,4 @@ install-dependencies:
 	ansible-galaxy install -r requirements.yml
 
 mac:
-	ansible-playbook mac.yml -i inventory.yml
+	ansible-playbook mac.yml -i inventory.yml --ask-become-pass
