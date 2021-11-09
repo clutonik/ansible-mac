@@ -1,0 +1,6 @@
+---
+- name: Create a directory to save oh-my-zsh install.sh
+  ansible.builtin.copy:
+    src: Brewfile
+    dest: "{{ user_home }}/Brewfile"
+    mode: '0755'
