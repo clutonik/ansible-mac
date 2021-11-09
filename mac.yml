@@ -3,4 +3,5 @@
   roles:
     - elliotweiser.osx-command-line-tools
     - oh-my-zsh
-    - geerlingguy.homebrew
+    - brewfile
+    - geerlingguy.mac.homebrew
