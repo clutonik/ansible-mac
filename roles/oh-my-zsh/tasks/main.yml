@@ -22,4 +22,4 @@
     ansible.builtin.shell: ./install.sh
     args:
       chdir: "{{ oh_my_zsh_dir }}"
-  when: not zsh_dir.stat.isdir
+  when: not zsh_dir.stat.exists
