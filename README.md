@@ -17,6 +17,13 @@ This repository uses some roles/collections from ansible galaxy. The roles/colle
 
     - To be able to install packages through brew, update Brewfile in roles/brewfile/files/Brewfile and run 'make mac'.
 
+
+### Enable vscode keypress instead of using Apple press
+
+    - Execute the following command in the terminal:
+
+        $ defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
 # Webhook
 
 This repo has a webhook which sends notifications to our discord channel. This webhook only sends events related to pull requests for now 

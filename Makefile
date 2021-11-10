@@ -7,3 +7,6 @@ install-dependencies:
 
 mac:
 	ansible-playbook mac.yml -i inventory.yml --ask-become-pass
+
+jenkins:
+	ansible-playbook jenkins.yml -i inventory.yml
