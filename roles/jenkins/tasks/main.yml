@@ -1,0 +1,58 @@
+---
+- name: create docker network for jenkins
+  community.docker.docker_network:
+    name: jenkins
+    state: present
+    driver: bridge
+    driver_options:
+      com.docker.network.bridge.name: jenkins
+      com.docker.network.bridge.enable_icc: true
+      com.docker.network.bridge.enable_ip_masquerade: true
+
+- name: create dcind container
+  community.docker.docker_container:
+    name: jenkins-docker
+    image: docker:dind
+    detach: true
+    privileged: true
+    state: started
+    container_default_behavior: no_defaults
+    network_mode: jenkins
+    networks: 
+      - name: jenkins
+        aliases:
+          - docker
+    ports:
+      - '2376:2376'
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    restart: yes
+    restart_policy: always
+    env:
+      DOCKER_TLS_CERTDIR: /certs
+
+
+# Start jenkins using custom built image (https://github.com/clutonik/docker-images/tree/main/jenkins)
+- name: create custom jenkins container
+  community.docker.docker_container:
+    name: jenkins
+    image: clutonik-jenkins-blueocean:latest
+    detach: true
+    state: started
+    container_default_behavior: no_defaults
+    restart: yes
+    restart_policy: always
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+    env:
+      DOCKER_HOST=tcp://docker:2376
+      DOCKER_TLS_VERIFY=1
+      DOCKER_CERT_PATH=/certs/client
+      JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+      JENKINS_USER=jenkins
+      JENKINS_PASSWORD=jenkins
